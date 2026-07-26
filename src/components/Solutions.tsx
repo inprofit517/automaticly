@@ -61,7 +61,7 @@ const BLOCKS: Block[] = [
 
 export function Solutions() {
   return (
-    <section id="loesungen" className="relative py-24 sm:py-32">
+    <section id="loesungen" className="relative overflow-hidden py-24 sm:py-32">
       <div className="pointer-events-none absolute inset-0 bg-dots opacity-20" aria-hidden="true" />
       <div className="relative mx-auto max-w-6xl px-5">
         <Reveal className="max-w-3xl">
