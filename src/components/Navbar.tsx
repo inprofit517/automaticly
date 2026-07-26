@@ -15,6 +15,8 @@ export function Logo({ className = '' }: { className?: string }) {
       <img
         src="/logo.png"
         alt="Automaticly"
+        width={568}
+        height={96}
         className="h-7 w-auto sm:h-8"
       />
     </a>
