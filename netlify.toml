@@ -7,6 +7,11 @@
 
 [build.environment]
   NODE_VERSION = "20"
+  # These are non-secret config values that legitimately appear in the public
+  # site (email, opening hours, timezone, …). Exclude them from Netlify's secret
+  # scanning so the build doesn't fail on false positives. The real secret
+  # (MS_CLIENT_SECRET) and the app IDs are NOT listed and stay scanned.
+  SECRETS_SCAN_OMIT_KEYS = "TIMEZONE,CALENDAR_EMAIL,WORK_START,WORK_END,WORK_DAYS,SLOT_MINUTES,STEP_MINUTES,BUFFER_MINUTES,MIN_NOTICE_HOURS,WINDOW_DAYS,ENABLE_TEAMS"
 
 # Route the booking API to the serverless functions.
 # /api/availability -> functions/availability, /api/book -> functions/book
