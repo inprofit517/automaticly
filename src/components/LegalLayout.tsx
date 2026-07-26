@@ -2,6 +2,7 @@ import { type ReactNode } from 'react';
 import { ArrowLeft } from 'lucide-react';
 import { Logo } from './Navbar';
 import { Footer } from './Footer';
+import { navigate } from '../lib/nav';
 
 /** Shell for standalone legal pages (Datenschutz, Impressum, …). */
 export function LegalLayout({
@@ -19,7 +20,8 @@ export function LegalLayout({
         <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3.5">
           <Logo />
           <a
-            href="#/"
+            href="/"
+            onClick={(e) => { e.preventDefault(); navigate('/'); }}
             className="group inline-flex items-center gap-2 text-sm text-muted transition-colors hover:text-offwhite"
           >
             <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-0.5" />

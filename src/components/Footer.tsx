@@ -1,22 +1,25 @@
 import { Mail, MapPin } from 'lucide-react';
 import { Logo } from './Navbar';
 import { useMediaQuery } from '../lib/hooks';
+import { navigate, scrollToSection } from '../lib/nav';
 
-const COLS = [
+type FooterLink = { label: string; section?: string; to?: string };
+
+const COLS: { title: string; links: FooterLink[] }[] = [
   {
     title: 'Lösungen',
     links: [
-      { label: 'Chatbots', href: '#chatbots' },
-      { label: 'Buchungssysteme', href: '#buchung' },
-      { label: 'Voice Agents', href: '#voice' },
+      { label: 'Chatbots', section: 'loesungen' },
+      { label: 'Buchungssysteme', section: 'loesungen' },
+      { label: 'Voice Agents', section: 'loesungen' },
     ],
   },
   {
     title: 'Unternehmen',
     links: [
-      { label: 'Impressum', href: '#/impressum' },
-      { label: 'Datenschutz', href: '#/datenschutz' },
-      { label: 'AGB', href: '#/agb' },
+      { label: 'Impressum', to: '/impressum' },
+      { label: 'Datenschutz', to: '/datenschutz' },
+      { label: 'AGB', to: '/agb' },
     ],
   },
 ];
@@ -68,7 +71,12 @@ function FooterInner() {
                 {col.links.map((l) => (
                   <li key={l.label}>
                     <a
-                      href={l.href}
+                      href={l.to ?? `#${l.section}`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        if (l.to) navigate(l.to);
+                        else if (l.section) scrollToSection(l.section);
+                      }}
                       className="text-sm text-muted transition-colors hover:text-offwhite"
                     >
                       {l.label}

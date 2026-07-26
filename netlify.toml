@@ -19,3 +19,11 @@
   from = "/api/*"
   to = "/.netlify/functions/:splat"
   status = 200
+
+# SPA fallback: serve index.html for client-side routes (/datenschutz, /impressum,
+# /agb). Static files (assets, images) are served directly; this only catches
+# paths without a matching file. Must come AFTER the /api rule above.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

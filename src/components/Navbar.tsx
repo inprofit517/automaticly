@@ -2,16 +2,22 @@ import { useEffect, useState } from 'react';
 import { Menu, X, ArrowRight } from 'lucide-react';
 import { useScrolled } from '../lib/hooks';
 import { CtaButton } from './ui';
+import { scrollToSection } from '../lib/nav';
 
 const LINKS = [
-  { label: 'Lösungen', href: '#loesungen' },
-  { label: 'Prozess', href: '#ablauf' },
-  { label: 'Team', href: '#team' },
+  { label: 'Lösungen', id: 'loesungen' },
+  { label: 'Prozess', id: 'ablauf' },
+  { label: 'Team', id: 'team' },
 ];
 
 export function Logo({ className = '' }: { className?: string }) {
   return (
-    <a href="#top" className={`inline-flex items-center ${className}`} aria-label="Automaticly Startseite">
+    <a
+      href="/"
+      onClick={(e) => { e.preventDefault(); scrollToSection('top'); }}
+      className={`inline-flex items-center ${className}`}
+      aria-label="Automaticly Startseite"
+    >
       <img
         src="/logo.png"
         alt="Automaticly"
@@ -50,8 +56,9 @@ export function Navbar() {
           <nav className="hidden items-center gap-7 md:flex" aria-label="Hauptnavigation">
             {LINKS.map((l) => (
               <a
-                key={l.href}
-                href={l.href}
+                key={l.id}
+                href={`#${l.id}`}
+                onClick={(e) => { e.preventDefault(); scrollToSection(l.id); }}
                 className="group relative text-sm text-muted transition-colors hover:text-offwhite"
               >
                 {l.label}
@@ -94,9 +101,9 @@ export function Navbar() {
         <nav className="relative flex flex-col gap-1 px-6 py-8" aria-label="Mobile Navigation">
           {LINKS.map((l, i) => (
             <a
-              key={l.href}
-              href={l.href}
-              onClick={() => setOpen(false)}
+              key={l.id}
+              href={`#${l.id}`}
+              onClick={(e) => { e.preventDefault(); scrollToSection(l.id); setOpen(false); }}
               style={{ transitionDelay: open ? `${100 + i * 55}ms` : '0ms' }}
               className={`flex items-center justify-between border-b border-white/[0.06] py-4 text-lg text-offwhite transition-all duration-300 ease-out ${
                 open ? 'translate-y-0 opacity-100' : 'translate-y-2 opacity-0'

@@ -1,5 +1,15 @@
 import { type ReactNode, type HTMLAttributes } from 'react';
 import { useReveal } from '../lib/hooks';
+import { scrollToSection } from '../lib/nav';
+
+/** Returns an onClick that smooth-scrolls (no URL hash) when href is like '#section'. */
+function hashScroll(href: string) {
+  if (!href.startsWith('#')) return undefined;
+  return (e: React.MouseEvent) => {
+    e.preventDefault();
+    scrollToSection(href.slice(1));
+  };
+}
 
 /** Reveal wrapper: fades + slides children up on scroll into view. */
 export function Reveal({
@@ -55,6 +65,7 @@ export function CtaButton({
   return (
     <a
       href={href}
+      onClick={hashScroll(href)}
       className={`group relative inline-flex items-center justify-center gap-2 rounded-full bg-lime-500 font-semibold text-ink-950 transition-all duration-300 hover:shadow-glow hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lime-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-950 ${sizes[size]} ${className}`}
     >
       <span className="relative z-10 flex items-center gap-2">{children}</span>
@@ -76,6 +87,7 @@ export function GhostButton({
   return (
     <a
       href={href}
+      onClick={hashScroll(href)}
       className={`group inline-flex items-center justify-center gap-2 rounded-full border border-white/12 bg-white/[0.02] px-5 py-2.5 text-sm sm:text-[15px] font-medium text-offwhite transition-all duration-300 hover:border-lime-500/40 hover:bg-white/[0.05] hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-950 ${className}`}
     >
       {children}

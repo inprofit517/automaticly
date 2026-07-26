@@ -12,34 +12,15 @@ import { LegalLayout } from './components/LegalLayout';
 import { Datenschutz } from './pages/Datenschutz';
 import { Impressum } from './pages/Impressum';
 import { AGB } from './pages/AGB';
-
-/** Lightweight hash router: '#/datenschutz' → 'datenschutz', anything else → 'home'. */
-function getRoute(): string {
-  const h = window.location.hash;
-  const seg = h.startsWith('#/') ? h.slice(2) : '';
-  return seg || 'home';
-}
+import { getRoute } from './lib/nav';
 
 export default function App() {
   const [route, setRoute] = useState(getRoute);
 
   useEffect(() => {
-    const onHashChange = () => {
-      const r = getRoute();
-      setRoute(r);
-      // On the landing page, honour in-page anchor links (#loesungen, #team, …).
-      const h = window.location.hash;
-      if (r === 'home' && h && !h.startsWith('#/') && h !== '#') {
-        const el = document.getElementById(h.slice(1));
-        if (el) {
-          requestAnimationFrame(() => el.scrollIntoView({ behavior: 'smooth' }));
-          return;
-        }
-      }
-      window.scrollTo(0, 0);
-    };
-    window.addEventListener('hashchange', onHashChange);
-    return () => window.removeEventListener('hashchange', onHashChange);
+    const onNav = () => setRoute(getRoute());
+    window.addEventListener('popstate', onNav);
+    return () => window.removeEventListener('popstate', onNav);
   }, []);
 
   if (route === 'datenschutz') {

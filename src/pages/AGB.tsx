@@ -1,4 +1,5 @@
 import { LegalSection } from '../components/LegalLayout';
+import { navigate } from '../lib/nav';
 
 const li = 'list-disc space-y-1 pl-5 marker:text-lime-500';
 
@@ -213,7 +214,11 @@ export function AGB() {
         </p>
         <p>
           Die Bearbeitung personenbezogener Daten erfolgt gemäss der jeweils gültigen{' '}
-          <a href="#/datenschutz" className="text-lime-500 hover:text-lime-400">
+          <a
+            href="/datenschutz"
+            onClick={(e) => { e.preventDefault(); navigate('/datenschutz'); }}
+            className="text-lime-500 hover:text-lime-400"
+          >
             Datenschutzerklärung
           </a>
           .
