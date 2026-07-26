@@ -1,0 +1,16 @@
+# Netlify configuration for Automaticly
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+  functions = "netlify/functions"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# Route the booking API to the serverless functions.
+# /api/availability -> functions/availability, /api/book -> functions/book
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
